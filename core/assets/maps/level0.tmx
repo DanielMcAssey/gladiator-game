@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="23" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="environment" tilewidth="16" tileheight="16" tilecount="32" columns="4">
+  <image source="../tilesets/environment.png" width="64" height="128"/>
+ </tileset>
+ <imagelayer name="bg_main">
+  <image source="../textures/backgrounds/sky.png" width="640" height="360"/>
+ </imagelayer>
+ <layer name="layer_bg" width="100" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztlFEOgyAQRPlDrJygvf85GxKom8ku2g9j07yXbECBdZYBUwIAAAAAAAAAAAAAAAC4hny3APjQvFjuFnGSxcQ/0upqfpS7hQh233PQqjfPHq+gr7lnZCeupvbvjPaXsF5sPSJfvtFuvbR7rc85+b7PzkWUx1uvOlrbfCg9dGyM67tIw2LyRHVE6z3d9nk7+PYW5NO9rsnXo/O8vY20RmNn7rSnoab9fnhhayiS52HmFdNfTc5ZjUfv1Y/Z2RrtKnPUgzNna3ZGPH+Oaoti6LP/KKv5DVkOCbg=
+  </data>
+ </layer>
+ <layer name="layer_ground" width="100" height="23">
+  <data encoding="base64" compression="zlib">
+   eJzt02ELgjAQxvGVrpepqdX3/6TuxGLVbciabC/+P3iQwbEbd2gMAAAAAAAAAAD4R1v6AXiTXZxLPwIrdlGPWncxujy8PLf0X3WdVzNl7C9zuSixGXtoPUvtQnrbyHlOuPO+o0b27O9U9nk1v3MPzaVRanNF66m97ajeTeB8chkC84i5mc//yf++knIvgDotk8MD/A==
+  </data>
+ </layer>
+</map>
