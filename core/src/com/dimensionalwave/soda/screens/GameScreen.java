@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Array;
-import com.dimensionalwave.soda.Constants;
 import com.dimensionalwave.soda.actors.AI.AI;
 import com.dimensionalwave.soda.actors.Player;
 
@@ -70,10 +69,10 @@ public class GameScreen implements Screen {
 
     private void drawLevel(SpriteBatch spriteBatch) {
         // Update
-        player.render(spriteBatch, Constants.SCALE);
+        player.render(spriteBatch);
 
         for(AI ai : enemyAI) {
-            ai.render(spriteBatch, Constants.SCALE);
+            ai.render(spriteBatch);
         }
 
     }

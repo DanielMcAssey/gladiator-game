@@ -2,11 +2,13 @@ package com.dimensionalwave.soda.actors.Powerups;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.dimensionalwave.soda.handlers.ContentManager;
 
 public class HealthPowerup extends Powerup {
 
-    public HealthPowerup(Vector2 startPosition, String newName) {
-        super(startPosition, newName);
+    public HealthPowerup(ContentManager contentManager, World newWorld, Vector2 startPosition, String newName) {
+        super(contentManager, newWorld, startPosition, newName);
     }
 
     @Override
@@ -15,7 +17,7 @@ public class HealthPowerup extends Powerup {
     }
 
     @Override
-    public void render(SpriteBatch spriteBatch, float PPM) {
+    public void render(SpriteBatch spriteBatch) {
 
     }
 

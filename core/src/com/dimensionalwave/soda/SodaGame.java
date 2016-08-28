@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.dimensionalwave.soda.handlers.ContentManager;
 import com.dimensionalwave.soda.handlers.GameStateManager;
 import com.dimensionalwave.soda.input.InputHandler;
 import com.dimensionalwave.soda.input.InputManager;
@@ -17,6 +18,11 @@ public class SodaGame extends ApplicationAdapter {
     private OrthographicCamera hudCamera;
 
     private GameStateManager gameStateManager;
+    private ContentManager contentManager;
+
+    public ContentManager getContentManager() {
+        return contentManager;
+    }
 
     public SpriteBatch getSpriteBatch() {
         return spriteBatch;
@@ -34,6 +40,8 @@ public class SodaGame extends ApplicationAdapter {
 	public void create () {
         Gdx.input.setInputProcessor(new InputHandler());
 
+        contentManager = new ContentManager();
+
         spriteBatch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.V_WIDTH, Constants.V_HEIGHT);
@@ -47,9 +55,15 @@ public class SodaGame extends ApplicationAdapter {
 	public void render () {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
+        if(!contentManager.isLoaded()) {
+            contentManager.update();
+        }
+
         gameStateManager.update(deltaTime);
         gameStateManager.render();
         InputManager.update();
+
+        spriteBatch.setProjectionMatrix(hudCamera.combined);
 	}
 	
 	@Override
