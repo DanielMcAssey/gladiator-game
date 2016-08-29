@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="23" tilewidth="16" tileheight="16" nextobjectid="9">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="110" height="23" tilewidth="16" tileheight="16" nextobjectid="28">
  <tileset firstgid="1" name="environment" tilewidth="16" tileheight="16" tilecount="32" columns="4">
   <image source="../tilesets/environment.png" width="64" height="128"/>
  </tileset>
- <imagelayer name="bg_main">
-  <image source="../textures/backgrounds/sky.png" width="640" height="360"/>
- </imagelayer>
- <layer name="layer_bg" width="100" height="23">
+ <layer name="layer_bg" width="110" height="23">
   <data encoding="base64" compression="zlib">
-   eJztlFEOgyAQRPlDrJygvf85GxKom8ku2g9j07yXbECBdZYBUwIAAAAAAAAAAAAAAAC4hny3APjQvFjuFnGSxcQ/0upqfpS7hQh233PQqjfPHq+gr7lnZCeupvbvjPaXsF5sPSJfvtFuvbR7rc85+b7PzkWUx1uvOlrbfCg9dGyM67tIw2LyRHVE6z3d9nk7+PYW5NO9rsnXo/O8vY20RmNn7rSnoab9fnhhayiS52HmFdNfTc5ZjUfv1Y/Z2RrtKnPUgzNna3ZGPH+Oaoti6LP/KKv5DVkOCbg=
+   eJztll0OhCAMhPuGuHKC3fufc2NCk6FO/XnYaDbzJQ2giK3TgmZCCCGEEEIIIYQQQgghhBBCiCNat9pt6uO1Lb1fbvNOMFY9XKup9wuM/X69y0GxwfVxXbzumIbtJh+vMoH9I1hLxcY9EfdN1PVJoD4laaOG726fpB/X3qMQ+zV+XnnrsRYbaxC1fVq9oWZLt0y/K980nhH4TZhWMT/28idbhz0f/fA9L/6DMM28FnH/xPXYtczXmAss3ux5Fh+Ol4N3L8l6UZNm3J84j2mQ+ZrdO7NHMB9cC6wnbFGXajzeGGsN73vBPFxjtm2tn42Rach0yXJ/DnOiVmdycC+XmI5HsWWGNdVs63O10f/4f+Lzv3+hDKE=
   </data>
  </layer>
- <layer name="layer_ground" width="100" height="23">
+ <layer name="layer_ground" width="110" height="23">
   <data encoding="base64" compression="zlib">
-   eJzt02ELgjAQxvGVrpepqdX3/6TuxGLVbciabC/+P3iQwbEbd2gMAAAAAAAAAAD4R1v6AXiTXZxLPwIrdlGPWncxujy8PLf0X3WdVzNl7C9zuSixGXtoPUvtQnrbyHlOuPO+o0b27O9U9nk1v3MPzaVRanNF66m97ajeTeB8chkC84i5mc//yf++knIvgDotk8MD/A==
+   eJzt1esKgzAMhuFsnfvpYTr1/q/UFhSyrR1au2nhfSBIIbTRT1EEAAAAAAAAAAAA/3KzdV9ZOAeX2fXoIbAJmeUn98xaW4Oqca76ra9SPV3C80P/liLhGb4zz56Zm7H4sn5G7Nmv6HHvg87e5V7KZz6h52c8valqT2a+e/jVjCawvthqImZ/yOv3qa9LxewLANoERmUEOA==
   </data>
  </layer>
  <objectgroup name="layer_ai">
-  <object id="8" x="212.75" y="261.5"/>
+  <object id="8" name="ai" x="250.5" y="266.25"/>
+ </objectgroup>
+ <objectgroup name="layer_powerup">
+  <object id="12" name="armor" x="377.75" y="289.75"/>
+  <object id="14" name="health" x="463.5" y="290.75"/>
+  <object id="15" name="weapon" x="569" y="269.25"/>
+  <object id="16" name="weapon" x="800.5" y="288.5"/>
+  <object id="17" name="shield" x="1000.75" y="282.25"/>
+  <object id="18" name="health" x="860" y="288"/>
+  <object id="19" name="health" x="1197.75" y="273.5"/>
+  <object id="20" name="weapon" x="1232.25" y="273"/>
+  <object id="21" name="armor" x="1267.5" y="273"/>
+ </objectgroup>
+ <objectgroup name="layer_warp">
+  <object id="23" name="next_level" x="1600.25" y="144.25" width="158.25" height="79.75"/>
+  <object id="26" name="player_start" x="74.5" y="273.25"/>
+ </objectgroup>
+ <objectgroup name="layer_wall">
+  <object id="24" x="0.5" y="0" width="15.25" height="319.5"/>
+  <object id="25" x="1744.25" y="0" width="15" height="224.5"/>
+  <object id="27" name="wall_death" x="0.25" y="351.75" width="1759.5" height="15.75"/>
  </objectgroup>
 </map>
