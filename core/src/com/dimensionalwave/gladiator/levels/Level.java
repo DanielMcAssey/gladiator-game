@@ -35,6 +35,8 @@ public abstract class Level {
     protected Vector2 playerStart = new Vector2(0, 0);
     protected Vector2 bossStart = new Vector2(0, 0);
 
+    protected Array<Body> miscBodies = new Array<Body>();
+
     private TiledMap map;
     private OrthoCachedTiledMapRenderer tiledMapRenderer;
     private MapProperties mapProperties;
@@ -131,11 +133,14 @@ public abstract class Level {
                 tileFixtureDef.filter.categoryBits = Box2DConstants.CATEGORY_SCENERY;
                 tileFixtureDef.filter.maskBits = Box2DConstants.MASK_SCENERY;
 
-                world.createBody(tileBodyDef).createFixture(tileFixtureDef);
+                Body body = world.createBody(tileBodyDef);
+                body.createFixture(tileFixtureDef);
+                miscBodies.add(body);
             }
         }
 
         chainShape.dispose();
+
         findWalls();
         findWarps();
         findPowerups();
@@ -249,14 +254,14 @@ public abstract class Level {
             BodyDef warpBody = new BodyDef();
             warpBody.type = BodyDef.BodyType.StaticBody;
             warpBody.position.set(
-                    (posX) / Box2DConstants.PPM,
-                    (posY) / Box2DConstants.PPM
+                    (posX + (width / 2)) / Box2DConstants.PPM,
+                    (posY + (height / 2)) / Box2DConstants.PPM
             );
 
             PolygonShape polygonShape = new PolygonShape();
             polygonShape.setAsBox(
-                    (width) / Box2DConstants.PPM,
-                    (height) / Box2DConstants.PPM
+                    (width) / 2 / Box2DConstants.PPM,
+                    (height) / 2 / Box2DConstants.PPM
             );
 
             FixtureDef fixtureDef = new FixtureDef();
@@ -268,6 +273,7 @@ public abstract class Level {
             Body body = world.createBody(warpBody);
             body.createFixture(fixtureDef).setUserData("warp_level_next");
             body.setUserData(this);
+            miscBodies.add(body);
 
             polygonShape.dispose();
         }
@@ -290,14 +296,14 @@ public abstract class Level {
             BodyDef wallBody = new BodyDef();
             wallBody.type = BodyDef.BodyType.StaticBody;
             wallBody.position.set(
-                    (posX) / Box2DConstants.PPM,
-                    (posY) / Box2DConstants.PPM
+                    (posX + (width / 2)) / Box2DConstants.PPM,
+                    (posY + (height / 2)) / Box2DConstants.PPM
             );
 
             PolygonShape polygonShape = new PolygonShape();
             polygonShape.setAsBox(
-                    (width) / Box2DConstants.PPM,
-                    (height) / Box2DConstants.PPM
+                    (width) / 2 / Box2DConstants.PPM,
+                    (height) / 2 / Box2DConstants.PPM
             );
 
             FixtureDef fixtureDef = new FixtureDef();
@@ -313,8 +319,7 @@ public abstract class Level {
             } else {
                 body.createFixture(fixtureDef);
             }
-
-
+            miscBodies.add(body);
 
             polygonShape.dispose();
         }

@@ -7,23 +7,15 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.dimensionalwave.gladiator.Box2DConstants;
-import com.dimensionalwave.gladiator.Constants;
 import com.dimensionalwave.gladiator.actors.ActorDirection;
+import com.dimensionalwave.gladiator.enums.AIAnimation;
+import com.dimensionalwave.gladiator.enums.PlayerAnimation;
 import com.dimensionalwave.gladiator.handlers.ActionAnimation;
 import com.dimensionalwave.gladiator.handlers.ContentManager;
 import com.dimensionalwave.gladiator.helpers.CharacterAction;
 import com.dimensionalwave.gladiator.helpers.HealthBar;
 
 import java.util.HashMap;
-
-enum AIAnimation {
-    IDLE,
-    WALK,
-    ATTACK,
-    BLOCK,
-    BLOCK_RESET,
-    DEATH
-}
 
 public class RomanAI extends AI {
 
@@ -35,7 +27,13 @@ public class RomanAI extends AI {
 
     private HealthBar healthBar;
 
+    private Boolean isMoving = false;
+    private Boolean isAttacking = false;
+    private Boolean isBlocking = false;
+
     private float stateTime;
+
+    private float attackTimeout = 0.0f;
 
     private void setAnimation(AIAnimation newAnimation) {
         if(activeAnimationType != null && activeAnimationType.equals(newAnimation) || !animations.containsKey(newAnimation)) {
@@ -133,16 +131,87 @@ public class RomanAI extends AI {
             isRemovable = true;
         }
 
+        if(isHit) {
+            hitAmount += dT * 10;
+        }
+
+        if(hitAmount >= 1.0f) {
+            hitAmount = 0.0f;
+            isHit = false;
+        }
+
         if(isDead()) {
             return;
         }
 
-        // TODO: AI Logic
+        // CAN SEE YOU
+        if(target == null) {
+            return;
+        }
+
+        if(target.getPosition().x <= getPosition().x) {
+            actorDirection = ActorDirection.LEFT;
+        } else {
+            actorDirection = ActorDirection.RIGHT;
+        }
+
+        float distance = Math.abs(target.getPosition().x - getPosition().x);
+        if(distance > (10 / Box2DConstants.PPM) && distance < (100 / Box2DConstants.PPM) && inContact == null) {
+            setAnimation(AIAnimation.WALK);
+            isBlocking = false;
+            isAttacking = false;
+            isMoving = true;
+            physicsBody.setLinearVelocity(Math.signum(target.getPosition().x - getPosition().x) * 0.3f, 0);
+        } else if(!isAttacking && !isBlocking && isMoving) {
+            physicsBody.setLinearVelocity(0, 0);
+            isMoving = false;
+            setAnimation(AIAnimation.IDLE);
+        }
+
+        // FIGHTING YOU
+        if(inContact == null) {
+            return;
+        }
+
+        attackTimeout += dT;
+
+        if(attackTimeout >= 2.15f && !isBlocking && activeAnimation.isAnimationFinished()) {
+            attackTimeout = 0.0f;
+
+            setAnimation(AIAnimation.ATTACK);
+            setProperty("ACTION", CharacterAction.ATTACK);
+            isAttacking = true;
+
+            target.doDamage(10.0f, CharacterAction.BLOCK);
+        } else {
+            if(!isMoving && !isBlocking && isAttacking && activeAnimation.isAnimationFinished()) {
+                setAnimation(AIAnimation.BLOCK);
+                setProperty("ACTION", CharacterAction.BLOCK);
+                isAttacking = false;
+                isBlocking = true;
+            } else if(attackTimeout >= 2.15f && isBlocking && !isAttacking && !isMoving && !activeAnimationType.equals(AIAnimation.BLOCK_RESET) && activeAnimation.isAnimationFinished()) {
+                setProperty("ACTION", CharacterAction.NONE);
+                setAnimation(AIAnimation.BLOCK_RESET);
+                isBlocking = false;
+            }
+        }
     }
 
     @Override
     public void render(SpriteBatch spriteBatch) {
+
+        if(isHit) {
+            spriteBatch.setColor(1.0f, hitAmount, 0.0f, 1.0f);
+        } else {
+            spriteBatch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        }
+
         activeAnimation.render(spriteBatch, actorDirection);
+
+        if(isHit) {
+            spriteBatch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        }
+
         healthBar.render(spriteBatch);
     }
 

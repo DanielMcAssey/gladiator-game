@@ -21,7 +21,10 @@ public class Level1 extends Level {
     public void load() {
         super.load();
 
-        bossAI = new RomanBossAI(gameStateManager.game().getContentManager(), world, bossStart, "CAESAR");
+        bossAI = new RomanBossAI(gameStateManager.game().getContentManager(), world, new Vector2(0,0), "CAESAR");
+        player.setPosition(playerStart);
+        player.setProperty("HEALTH", 100.0f);
+        bossAI.setPosition(bossStart);
     }
 
     @Override
@@ -29,6 +32,10 @@ public class Level1 extends Level {
         super.update(deltaTime);
 
         bossAI.update(deltaTime);
+
+        if(bossAI.getTarget() == null) {
+            bossAI.setTarget(player);
+        }
 
         if(bossAI.isDead() && bossAI.isRemovable()) {
             isNextLevel = true;

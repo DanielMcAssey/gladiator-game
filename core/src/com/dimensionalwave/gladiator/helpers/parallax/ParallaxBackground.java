@@ -26,11 +26,11 @@ public class ParallaxBackground {
 
             if( speed.x < 0 )currentX += -( layer.texture.getWidth() + layer.padding.x);
             do{
-                float currentY = - camera.position.y*layer.parallaxRatio.y % ( layer.texture.getHeight() + layer.padding.y) ;
-                if( speed.y < 0 )currentY += - (layer.texture.getHeight()+layer.padding.y);
+                float currentY = - camera.position.y * layer.parallaxRatio.y % ( layer.texture.getHeight() + layer.padding.y) ;
+                if( speed.y < 0 )currentY += - (layer.texture.getHeight() + layer.padding.y);
                 do{
                     spriteBatch.draw(layer.texture,
-                            -camera.viewportWidth/2+currentX + layer.startPosition.x ,
+                            -camera.viewportWidth/2 + currentX + layer.startPosition.x ,
                             -camera.viewportHeight/2 + currentY +layer.startPosition.y);
                     currentY += ( layer.texture.getHeight() + layer.padding.y );
                 }while( currentY < camera.viewportHeight);

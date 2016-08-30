@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.dimensionalwave.gladiator.actors.AI.AI;
 import com.dimensionalwave.gladiator.actors.Player;
 import com.dimensionalwave.gladiator.actors.Powerups.Powerup;
+import com.dimensionalwave.gladiator.levels.Level;
 
 public class ContactListenerImpl implements ContactListener {
 
@@ -50,6 +51,14 @@ public class ContactListenerImpl implements ContactListener {
                 ((Player)fA.getBody().getUserData()).setProperty("HEALTH", 0.0f);
             } else if (fB.getBody().getUserData() instanceof Player) {
                 ((Player)fB.getBody().getUserData()).setProperty("HEALTH", 0.0f);
+            }
+        }
+
+        if(isEqual(fA, fB, "warp_level_next", "player_body")) {
+            if(fA.getBody().getUserData() instanceof Level) {
+                ((Level)fA.getBody().getUserData()).setIsNextLevel(true);
+            } else if (fB.getBody().getUserData() instanceof Level) {
+                ((Level)fB.getBody().getUserData()).setIsNextLevel(true);
             }
         }
     }

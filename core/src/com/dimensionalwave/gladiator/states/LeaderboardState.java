@@ -1,5 +1,7 @@
 package com.dimensionalwave.gladiator.states;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.dimensionalwave.gladiator.enums.GameStates;
@@ -33,6 +35,8 @@ public class LeaderboardState extends GameState {
 
     @Override
     public void render() {
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         spriteBatch.begin();
         spriteBatch.setProjectionMatrix(hudCamera.combined);
         font.draw(spriteBatch, layout, (hudCamera.viewportWidth - layout.width) / 2f, (hudCamera.viewportHeight + layout.height) / 2);

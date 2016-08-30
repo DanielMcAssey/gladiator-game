@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="110" height="23" tilewidth="16" tileheight="16" nextobjectid="28">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="110" height="23" tilewidth="16" tileheight="16" nextobjectid="40">
  <tileset firstgid="1" name="environment" tilewidth="16" tileheight="16" tilecount="32" columns="4">
   <image source="../tilesets/environment.png" width="64" height="128"/>
  </tileset>
+ <tileset firstgid="33" name="misc" tilewidth="16" tileheight="16" tilecount="2" columns="2">
+  <image source="../tilesets/misc.png" width="32" height="16"/>
+ </tileset>
  <layer name="layer_bg" width="110" height="23">
   <data encoding="base64" compression="zlib">
-   eJztll0OhCAMhPuGuHKC3fufc2NCk6FO/XnYaDbzJQ2giK3TgmZCCCGEEEIIIYQQQgghhBBCiCNat9pt6uO1Lb1fbvNOMFY9XKup9wuM/X69y0GxwfVxXbzumIbtJh+vMoH9I1hLxcY9EfdN1PVJoD4laaOG726fpB/X3qMQ+zV+XnnrsRYbaxC1fVq9oWZLt0y/K980nhH4TZhWMT/28idbhz0f/fA9L/6DMM28FnH/xPXYtczXmAss3ux5Fh+Ol4N3L8l6UZNm3J84j2mQ+ZrdO7NHMB9cC6wnbFGXajzeGGsN73vBPFxjtm2tn42Rach0yXJ/DnOiVmdycC+XmI5HsWWGNdVs63O10f/4f+Lzv3+hDKE=
+   eJztlmEKgzAMhfOv6uwh9P6HHIUGnjFRN9hmxnsQarWtiV/SugqVTWs3KpfILafILafILafILafILafILafILafILafILafILafILafILacWIbesIrd7qXYbuw2939rSr1tLbvdR46Gshn5doK/Pm5HbPaR8lIvWncew3c/AbQD7R2EtFdnuibhvItflJ576Qj4laN9leGVOcezT0vNKW421yLYGkW39gl+vCJnN3SJ+r3xTe0bgN/FY2fw4yp9oHW++9UP3PPsP4jHTWsT9E9fz7kW+2lzw4o3me/Fhfz559xysZ5lU8f2x4zwGka/Rsyt7hOeDssB6wha5jOLHa2MdzfseMA7XmGRf61dj9Bh6XKLcn8wYy+pKDh7lksfxLLbIsKaq7H0eZeu//T/R8U92pxBJ
   </data>
  </layer>
  <layer name="layer_ground" width="110" height="23">
@@ -14,18 +17,27 @@
   </data>
  </layer>
  <objectgroup name="layer_ai">
-  <object id="8" name="ai" x="250.5" y="266.25"/>
+  <object id="8" name="ai" x="260" y="279.25"/>
+  <object id="29" name="ai" x="499" y="264"/>
+  <object id="30" name="ai" x="887" y="279"/>
+  <object id="31" name="ai" x="1144" y="244.5"/>
+  <object id="32" name="ai" x="1250" y="273"/>
+  <object id="33" name="ai" x="1471.5" y="271.5"/>
  </objectgroup>
  <objectgroup name="layer_powerup">
-  <object id="12" name="armor" x="377.75" y="289.75"/>
+  <object id="12" name="armor" x="379.25" y="297.75"/>
   <object id="14" name="health" x="463.5" y="290.75"/>
   <object id="15" name="weapon" x="569" y="269.25"/>
-  <object id="16" name="weapon" x="800.5" y="288.5"/>
+  <object id="16" name="weapon" x="801" y="293.5"/>
   <object id="17" name="shield" x="1000.75" y="282.25"/>
-  <object id="18" name="health" x="860" y="288"/>
+  <object id="18" name="health" x="853.5" y="292"/>
   <object id="19" name="health" x="1197.75" y="273.5"/>
   <object id="20" name="weapon" x="1232.25" y="273"/>
   <object id="21" name="armor" x="1267.5" y="273"/>
+  <object id="34" name="health" x="347" y="298"/>
+  <object id="37" name="armor" x="1312.5" y="272"/>
+  <object id="38" name="health" x="1289.75" y="272.5"/>
+  <object id="39" name="weapon" x="1334.25" y="271"/>
  </objectgroup>
  <objectgroup name="layer_warp">
   <object id="23" name="next_level" x="1600.25" y="144.25" width="158.25" height="79.75"/>

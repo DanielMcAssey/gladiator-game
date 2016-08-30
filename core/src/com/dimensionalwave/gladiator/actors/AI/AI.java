@@ -11,24 +11,26 @@ public abstract class AI extends Actor {
 
     protected boolean isRemovable = false;
     protected boolean isHit = false;
-    protected float hitAmount = 1.0f;
+    protected float hitAmount = 0.0f;
     protected Player inContact = null;
+    protected Player target = null;
     protected boolean isKillTaken = false;
 
     public AI(ContentManager contentManager, World newWorld, Vector2 startPosition, String newName) {
         super(contentManager, newWorld, startPosition, newName);
     }
 
-    public void setTarget(Player player) {
-        inContact = player;
-    }
-
     public void doDamage(float damageAmount) {
-        if(!((CharacterAction)getProperty("ACTION")).equals(CharacterAction.BLOCK) && !isDead()) {
-            if(getAiHealth() - damageAmount <= 0f) {
+        if(!isDead()) {
+            float trueDamage = damageAmount;
+            if(((CharacterAction)getProperty("ACTION")).equals(CharacterAction.BLOCK)) {
+                trueDamage = trueDamage / 2f;
+            }
+
+            if(getAiHealth() - trueDamage <= 0f) {
                 setProperty("HEALTH", 0f);
             } else {
-                setProperty("HEALTH", getAiHealth() - damageAmount);
+                setProperty("HEALTH", getAiHealth() - trueDamage);
             }
 
             isHit = true;
@@ -52,6 +54,14 @@ public abstract class AI extends Actor {
         inContact = null;
     }
 
+    public Player getTarget() {
+        return target;
+    }
+
+    public void setTarget(Player player) {
+        target = player;
+    }
+
     public float getAiHealth() {
         return (Float) getProperty("HEALTH");
     }
@@ -63,5 +73,5 @@ public abstract class AI extends Actor {
     public boolean isRemovable() {
         return isRemovable;
     }
-    
+
 }

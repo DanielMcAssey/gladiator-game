@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -43,6 +44,11 @@ public class Level0 extends Level {
                 romanAIsToRemove.addFirst(ai);
                 continue;
             }
+
+            if(ai.getTarget() == null) {
+                ai.setTarget(player);
+            }
+
             ai.update(deltaTime);
         }
 
@@ -66,6 +72,14 @@ public class Level0 extends Level {
         for(RomanAI ai : romanAIs) {
             ai.dispose();
         }
+
+        romanAIs.clear();
+
+        for(Body body : miscBodies) {
+            world.destroyBody(body);
+        }
+
+        miscBodies.clear();
     }
 
     private void createAI() {
@@ -76,12 +90,12 @@ public class Level0 extends Level {
         }
 
         for(MapObject mapObject : layer.getObjects()) {
-            romanAIs.add(new RomanAI(gameStateManager.game().getContentManager(),
-                    world,
-                    new Vector2(((Float) mapObject.getProperties().get("x")) / Box2DConstants.PPM,
-                            ((Float) mapObject.getProperties().get("y")) / Box2DConstants.PPM),
-                    "ROMAN")
-            );
+            float posX = (Float) mapObject.getProperties().get("x");
+            float posY = (Float) mapObject.getProperties().get("y");
+
+            RomanAI ai = new RomanAI(gameStateManager.game().getContentManager(), world, new Vector2(0, 0), "ROMAN");
+            ai.setPosition(new Vector2(posX, posY));
+            romanAIs.add(ai);
         }
     }
 }

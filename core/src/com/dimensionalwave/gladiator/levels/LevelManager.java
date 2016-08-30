@@ -1,7 +1,8 @@
 package com.dimensionalwave.gladiator.levels;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -40,6 +41,15 @@ public class LevelManager {
 
     private BitmapFont font = new BitmapFont();
 
+    private GlyphLayout layout = new GlyphLayout();
+
+    private Texture blackTexture;
+
+    private ParallaxLayer skyLayer;
+    private ParallaxLayer treesLayer;
+    private ParallaxLayer townLayer;
+    private ParallaxLayer coloseumLayer;
+
     private boolean isLost = false;
     private boolean isWin = false;
 
@@ -74,17 +84,19 @@ public class LevelManager {
         contentManager.loadTexture("textures/backgrounds/sky.png", "bg_sky");
         contentManager.loadTexture("textures/backgrounds/trees.png", "bg_trees");
         contentManager.loadTexture("textures/backgrounds/town.png", "bg_town");
+        contentManager.loadTexture("textures/backgrounds/coliseum.png", "bg_coliseum");
 
         contentManager.waitForLoad();
 
-        ParallaxLayer skyLayer = new ParallaxLayer(contentManager.getTexture("bg_sky"), new Vector2(), new Vector2(0, 0));
-        ParallaxLayer treesLayer = new ParallaxLayer(contentManager.getTexture("bg_trees"), new Vector2(), new Vector2(0, 0));
-        ParallaxLayer townLayer = new ParallaxLayer(contentManager.getTexture("bg_town"), new Vector2(), new Vector2(0, 0));
-        Array<ParallaxLayer> layers = new Array<ParallaxLayer>();
-        layers.add(skyLayer);
-        layers.add(treesLayer);
-        layers.add(townLayer);
-        parallaxBackground = new ParallaxBackground(layers, new Vector2(100, 0));
+        Pixmap blackPixel = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        blackPixel.setColor(Color.BLACK);
+        blackPixel.fillRectangle(0, 0, 1, 1);
+        blackTexture = new Texture(blackPixel, Pixmap.Format.RGB888, false);
+
+        skyLayer = new ParallaxLayer(contentManager.getTexture("bg_sky"), new Vector2(), new Vector2(0, 0));
+        treesLayer = new ParallaxLayer(contentManager.getTexture("bg_trees"), new Vector2(), new Vector2(0, -5), new Vector2(0, 100));
+        townLayer = new ParallaxLayer(contentManager.getTexture("bg_town"), new Vector2(), new Vector2(0, -20), new Vector2(0, 100));
+        coloseumLayer = new ParallaxLayer(contentManager.getTexture("bg_coliseum"), new Vector2(), new Vector2(0, 45), new Vector2(0, 100));
     }
 
     public void loadLevel(int levelIndex) {
@@ -92,6 +104,17 @@ public class LevelManager {
             activeLevel.dispose();
             activeLevel = null;
         }
+
+        Array<ParallaxLayer> layers = new Array<ParallaxLayer>();
+        layers.add(skyLayer);
+        layers.add(treesLayer);
+        if(levelIndex == 0) {
+            layers.add(townLayer);
+        } else if(levelIndex == 1) {
+            layers.add(coloseumLayer);
+        }
+
+        parallaxBackground = new ParallaxBackground(layers, new Vector2(100, 0));
 
         activeLevel = levels.get(levelIndex);
         activeLevel.load();
@@ -174,10 +197,22 @@ public class LevelManager {
         hud.render(spriteBatch);
 
         if(isLost || isWin) {
+            spriteBatch.setColor(1.0f, 1.0f, 1.0f, 0.7f);
+            spriteBatch.draw(blackTexture, 0, 0, hudCamera.viewportWidth, hudCamera.viewportHeight);
             if(isLost) {
+                layout.setText(font, "YOU HAVE DIED");
+                font.draw(spriteBatch, layout, (hudCamera.viewportWidth - layout.width) / 2f, (hudCamera.viewportHeight + layout.height) / 2f);
 
+                layout.setText(font, "Press enter to return to menu");
+                font.draw(spriteBatch, layout, (hudCamera.viewportWidth - layout.width) / 2f, (hudCamera.viewportHeight + layout.height) / 2f - 30f);
+            } else if(isWin) {
+                layout.setText(font, "YOU WIN");
+                font.draw(spriteBatch, layout, (hudCamera.viewportWidth - layout.width) / 2f, (hudCamera.viewportHeight + layout.height) / 2f);
+
+                layout.setText(font, "Press enter to input your score");
+                font.draw(spriteBatch, layout, (hudCamera.viewportWidth - layout.width) / 2f, (hudCamera.viewportHeight + layout.height) / 2f - 30f);
             }
-
+            spriteBatch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         }
 
         spriteBatch.end();
@@ -195,6 +230,11 @@ public class LevelManager {
             activeLevel.dispose();
             activeLevel = null;
         }
+
+        gameStateManager.game().getContentManager().disposeTexture("bg_sky");
+        gameStateManager.game().getContentManager().disposeTexture("bg_trees");
+        gameStateManager.game().getContentManager().disposeTexture("bg_town");
+        gameStateManager.game().getContentManager().disposeTexture("bg_coliseum");
     }
 
 }

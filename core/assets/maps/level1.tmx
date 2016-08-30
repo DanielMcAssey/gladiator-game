@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="35" height="23" tilewidth="16" tileheight="16" nextobjectid="33">
+ <tileset firstgid="1" name="environment" tilewidth="16" tileheight="16" tilecount="32" columns="4">
+  <image source="../tilesets/environment.png" width="64" height="128"/>
+ </tileset>
+ <tileset firstgid="33" name="misc" tilewidth="16" tileheight="16" tilecount="2" columns="2">
+  <image source="../tilesets/misc.png" width="32" height="16"/>
+ </tileset>
+ <layer name="layer_bg" width="35" height="23">
+  <data encoding="base64" compression="zlib">
+   eJztjlEKwCAMQ/ennfMQev9DbkKEUPypUPfTQFFMbF6/zqpveh4KFntfsNg9DwWLvS9Y7J6HgsXeFyx2z0PBYu9rxyj+6dtV/ibhHFNxFgz7D944Lyoj2FEXOzNlk9qj3+dU9E4mzhfKCXLjfuMfcwvt0/1p0f8CcGEHrw==
+  </data>
+ </layer>
+ <layer name="layer_ground" width="35" height="23">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMApGwSgYBaNg+AI+IGajI2YEYnEolkBii9Pao0MYAACqywE9
+  </data>
+ </layer>
+ <objectgroup name="layer_warp">
+  <object id="26" name="player_start" x="74.5" y="273.25"/>
+  <object id="29" name="boss_start" x="375.75" y="274"/>
+ </objectgroup>
+ <objectgroup name="layer_wall">
+  <object id="24" x="0.5" y="0" width="15.25" height="319.5"/>
+  <object id="30" x="448.75" y="-0.25" width="15.25" height="319.5"/>
+  <object id="32" name="wall_death" x="0.5" y="352.25" width="463.25" height="15.5"/>
+ </objectgroup>
+</map>

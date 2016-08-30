@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.dimensionalwave.gladiator.Box2DConstants;
-import com.dimensionalwave.gladiator.Constants;
 import com.dimensionalwave.gladiator.actors.AI.AI;
+import com.dimensionalwave.gladiator.enums.PlayerAnimation;
 import com.dimensionalwave.gladiator.handlers.ActionAnimation;
 import com.dimensionalwave.gladiator.handlers.ContentManager;
 import com.dimensionalwave.gladiator.helpers.CharacterAction;
@@ -14,17 +14,6 @@ import com.dimensionalwave.gladiator.input.InputAction;
 import com.dimensionalwave.gladiator.input.InputManager;
 
 import java.util.HashMap;
-
-enum PlayerAnimation {
-    IDLE,
-    WALK,
-    ATTACK,
-    BLOCK,
-    BLOCK_RESET,
-    JUMP_START,
-    JUMP_END,
-    DEATH
-}
 
 public class Player extends Actor {
 
@@ -35,6 +24,9 @@ public class Player extends Actor {
     private PlayerAnimation activeAnimationType;
     private ActionAnimation activeAnimation;
     private ActorDirection actorDirection;
+
+    private boolean isHit = false;
+    private float hitAmount = 0.0f;
 
     private Boolean isRemovable = false;
     private Boolean isMoving = false;
@@ -56,8 +48,8 @@ public class Player extends Actor {
         }
     }
 
-    public void doDamage(float damageAmount) {
-        if(!((CharacterAction)getProperty("ACTION")).equals(CharacterAction.BLOCK) && !isDead()) {
+    public void doDamage(float damageAmount, CharacterAction dodgeAction) {
+        if(!((CharacterAction)getProperty("ACTION")).equals(dodgeAction) && !isDead()) {
             float trueDamageAmount = damageAmount / (getArmorStrength() / 100.0f);
 
             if(getPlayerHealth() - trueDamageAmount <= 0f) {
@@ -66,7 +58,7 @@ public class Player extends Actor {
                 setProperty("HEALTH", getPlayerHealth() - trueDamageAmount);
             }
 
-            // Animate
+            isHit = true;
         }
     }
 
@@ -120,7 +112,7 @@ public class Player extends Actor {
 
         animations.put(PlayerAnimation.IDLE, new ActionAnimation(contentManager.getTexture("char_player_idle"), new Vector2(0, 0), 4, 0.20f, true));
         animations.put(PlayerAnimation.WALK, new ActionAnimation(contentManager.getTexture("char_player_walk"), new Vector2(0, 0), 11, 0.10f, true));
-        animations.put(PlayerAnimation.ATTACK, new ActionAnimation(contentManager.getTexture("char_player_attack"), new Vector2(-14f, 0), 6, 0.05f, false));
+        animations.put(PlayerAnimation.ATTACK, new ActionAnimation(contentManager.getTexture("char_player_attack"), new Vector2(-25f, 0), 6, 0.05f, false));
         animations.put(PlayerAnimation.BLOCK, new ActionAnimation(contentManager.getTexture("char_player_block"), new Vector2(0, 0), 3, 0.10f, false));
         animations.put(PlayerAnimation.BLOCK_RESET, new ActionAnimation(contentManager.getTexture("char_player_block_reset"), new Vector2(0, 0), 3, 0.10f, false));
         animations.put(PlayerAnimation.JUMP_START, new ActionAnimation(contentManager.getTexture("char_player_jump_start"), new Vector2(0, 0), 4, 0.10f, false));
@@ -210,6 +202,15 @@ public class Player extends Actor {
             isRemovable = true;
         }
 
+        if(isHit) {
+            hitAmount += dT * 10;
+        }
+
+        if(hitAmount >= 1.0f) {
+            hitAmount = 0.0f;
+            isHit = false;
+        }
+
         if(isDead()) {
             return;
         }
@@ -217,6 +218,7 @@ public class Player extends Actor {
         if(InputManager.isPressed(InputAction.ACTION_JUMP) && (Boolean)getProperty("CAN_JUMP")) {
             isJumping = true;
             setAnimation(PlayerAnimation.JUMP_START);
+            setProperty("ACTION", CharacterAction.JUMP);
             physicsBody.applyForceToCenter(0, 140, true);
         }
 
@@ -263,6 +265,7 @@ public class Player extends Actor {
         if(isJumping && (Boolean)getProperty("CAN_JUMP") && activeAnimationType.equals(PlayerAnimation.JUMP_START) && activeAnimation.isAnimationFinished()) {
             isJumping = false;
             setAnimation(PlayerAnimation.JUMP_END);
+            setProperty("ACTION", CharacterAction.NONE);
         }
 
         if (!isJumping && activeAnimationType.equals(PlayerAnimation.JUMP_END) && activeAnimation.isAnimationFinished()) {
@@ -294,11 +297,17 @@ public class Player extends Actor {
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        if(isRemovable()) {
-            return;
+        if(isHit) {
+            spriteBatch.setColor(1.0f, hitAmount, 0.0f, 1.0f);
+        } else {
+            spriteBatch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         }
 
         activeAnimation.render(spriteBatch, actorDirection);
+
+        if(isHit) {
+            spriteBatch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        }
     }
 
     @Override
