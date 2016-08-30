@@ -1,2 +1,2 @@
-# sodagame
-Soda Game
+# Gladius: The Destroyer
+Destroy the roman empire!
