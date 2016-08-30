@@ -8,7 +8,7 @@
 	<inherits name='com.badlogic.ashley_gwt' />
 	<inherits name='Box2DLights' />
 
-    <inherits name='com.dimensionalwave.soda.GdxDefinition' />
+    <inherits name='com.dimensionalwave.gladiator.GdxDefinition' />
     
     <collapse-all-properties />
     

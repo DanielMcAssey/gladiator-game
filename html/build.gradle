@@ -7,8 +7,8 @@ gwt {
     minHeapSize="1G"
 
     src = files(file("src/")) // Needs to be in front of "modules" below.
-    modules 'com.dimensionalwave.soda.GdxDefinition'
-    devModules 'com.dimensionalwave.soda.GdxDefinitionSuperdev'
+    modules 'com.dimensionalwave.gladiator.GdxDefinition'
+    devModules 'com.dimensionalwave.gladiator.GdxDefinitionSuperdev'
     project.webAppDirName = 'webapp'
 
     compiler {
