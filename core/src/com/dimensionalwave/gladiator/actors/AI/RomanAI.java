@@ -125,6 +125,12 @@ public class RomanAI extends AI {
 
         if(isDead()) {
             setAnimation(AIAnimation.DEATH);
+            if(physicsBody != null) {
+                world.destroyBody(physicsBody);
+                Vector2 storedPosition = new Vector2(getPosition().x, getPosition().y);
+                physicsBody = null;
+                setPosition(storedPosition);
+            }
         }
 
         if(isDead() && activeAnimation.isAnimationFinished()) {
@@ -175,21 +181,21 @@ public class RomanAI extends AI {
 
         attackTimeout += dT;
 
-        if(attackTimeout >= 2.15f && !isBlocking && activeAnimation.isAnimationFinished()) {
+        if(attackTimeout >= 1.80f && !isBlocking && activeAnimation.isAnimationFinished()) {
             attackTimeout = 0.0f;
 
             setAnimation(AIAnimation.ATTACK);
             setProperty("ACTION", CharacterAction.ATTACK);
             isAttacking = true;
 
-            target.doDamage(10.0f, CharacterAction.BLOCK);
+            target.doDamage(23.0f, CharacterAction.BLOCK);
         } else {
             if(!isMoving && !isBlocking && isAttacking && activeAnimation.isAnimationFinished()) {
                 setAnimation(AIAnimation.BLOCK);
                 setProperty("ACTION", CharacterAction.BLOCK);
                 isAttacking = false;
                 isBlocking = true;
-            } else if(attackTimeout >= 2.15f && isBlocking && !isAttacking && !isMoving && !activeAnimationType.equals(AIAnimation.BLOCK_RESET) && activeAnimation.isAnimationFinished()) {
+            } else if(attackTimeout >= 1.80f && isBlocking && !isAttacking && !isMoving && !activeAnimationType.equals(AIAnimation.BLOCK_RESET) && activeAnimation.isAnimationFinished()) {
                 setProperty("ACTION", CharacterAction.NONE);
                 setAnimation(AIAnimation.BLOCK_RESET);
                 isBlocking = false;
@@ -223,6 +229,9 @@ public class RomanAI extends AI {
         contentManager.disposeTexture("char_ai_block");
         contentManager.disposeTexture("char_ai_block_reset");
         contentManager.disposeTexture("char_ai_death");
-        world.destroyBody(physicsBody);
+        if(physicsBody != null) {
+            world.destroyBody(physicsBody);
+            physicsBody = null;
+        }
     }
 }

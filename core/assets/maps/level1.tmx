@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="35" height="23" tilewidth="16" tileheight="16" nextobjectid="33">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="35" height="23" tilewidth="16" tileheight="16" nextobjectid="34">
  <tileset firstgid="1" name="environment" tilewidth="16" tileheight="16" tilecount="32" columns="4">
   <image source="../tilesets/environment.png" width="64" height="128"/>
  </tileset>
@@ -68,5 +68,6 @@
   <object id="24" x="0.5" y="0" width="15.25" height="319.5"/>
   <object id="30" x="448.75" y="-0.25" width="15.25" height="319.5"/>
   <object id="32" name="wall_death" x="0.5" y="352.25" width="463.25" height="15.5"/>
+  <object id="33" x="0.75" y="319.75" width="558.75" height="15.75"/>
  </objectgroup>
 </map>

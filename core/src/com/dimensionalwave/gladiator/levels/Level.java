@@ -133,9 +133,9 @@ public abstract class Level {
                 tileFixtureDef.filter.categoryBits = Box2DConstants.CATEGORY_SCENERY;
                 tileFixtureDef.filter.maskBits = Box2DConstants.MASK_SCENERY;
 
-                Body body = world.createBody(tileBodyDef);
-                body.createFixture(tileFixtureDef);
-                miscBodies.add(body);
+                //Body body = world.createBody(tileBodyDef);
+                //body.createFixture(tileFixtureDef);
+                //miscBodies.add(body);
             }
         }
 

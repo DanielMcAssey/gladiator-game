@@ -18,6 +18,8 @@ import java.util.HashMap;
 
 public class RomanBossAI extends AI {
 
+    private final static float BOSS_HEALTH = 600.0f;
+
     private HashMap<AIBossAnimation, ActionAnimation> animations = new HashMap<AIBossAnimation, ActionAnimation>();
 
     private AIBossAnimation activeAnimationType;
@@ -115,7 +117,7 @@ public class RomanBossAI extends AI {
 
         // Initialize properties
         setProperty("ACTION", CharacterAction.NONE);
-        setProperty("HEALTH", 250.0f);
+        setProperty("HEALTH", BOSS_HEALTH);
     }
 
     @Override
@@ -131,7 +133,7 @@ public class RomanBossAI extends AI {
             lightningOffsetX = -lightningOffsetX;
         }
 
-        healthBar.update((Float)getProperty("HEALTH"), 250.0f);
+        healthBar.update((Float)getProperty("HEALTH"), BOSS_HEALTH);
         healthBar.setHealthPosition(new Vector2(getScaledPosition().x - 43, getScaledPosition().y + 76));
 
         if(isDead()) {
@@ -198,7 +200,7 @@ public class RomanBossAI extends AI {
             if(lightningAttack.isAnimationFinished() && attackTimeout >= 6.0f) {
                 attackTimeout = 0.0f;
 
-                target.doDamage(10.0f, CharacterAction.JUMP);
+                target.doDamage(32.0f, CharacterAction.JUMP);
             }
         } else {
             if(!isMoving && isAttacking && activeAnimation.isAnimationFinished()) {
